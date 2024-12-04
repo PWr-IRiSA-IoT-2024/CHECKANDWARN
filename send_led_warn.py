@@ -62,7 +62,7 @@ async def main():
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
     while True:
         await read_modify_write()
-        asyncio.sleep(MEAN_TIME_RANGE*60)
+        await asyncio.sleep(MEAN_TIME_RANGE*60)
 
 # Run the script
 asyncio.run(main())
