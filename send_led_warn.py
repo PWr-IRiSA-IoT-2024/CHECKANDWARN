@@ -35,24 +35,29 @@ async def read_modify_write():
 
             # Step 1: Read the current value
             current_value = await client.read_gatt_char(LED_CONTROL_UUID)
-            print(f"Current value: {current_value.hex()}")
+            logging.info(f"Current value: {current_value.hex()}")
 
             # Step 2: Modify the value
             value_int = int.from_bytes(current_value, byteorder='little')
-            print(f"Current value (as integer): {value_int:08b}")
+            logging.info(f"Current value (as integer): {value_int:08b}")
 
             value_int = check_and_modify(value_int)
 
-            print(f"Modified value: {value_int:08b}")
+            logging.info(f"Modified value: {value_int:08b}")
 
             # Step 3: Write the modified value back
             modified_value = value_int.to_bytes(len(current_value), byteorder='little')
-            print(f"Modified value (as bytearray): {modified_value.hex()}")
+            logging.info(f"Modified value (as bytearray): {modified_value.hex()}")
             await client.write_gatt_char(LED_CONTROL_UUID, modified_value)
-            print(f"Modified value written: {modified_value.hex()}")
+            logging.info(f"Modified value written: {modified_value.hex()}")
+            current_value = await client.read_gatt_char(LED_CONTROL_UUID)
+            if current_value == modified_value:
+                logging.info("Value written successfully")
+            else:
+                logging.error("Error: Value on nrfDK differs from the value written")
             await client.disconnect()
     except Exception as e:
-        print(f"An error occurred: {e}")
+        logging.error(f"An error occurred: {e}")
 
 async def main():
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
