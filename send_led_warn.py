@@ -3,10 +3,9 @@ import sys
 import asyncio
 import logging
 from bleak import BleakClient
-from enum import Enum
 from dotenv import load_dotenv
 
-from utils import check_and_modify
+from utils.check_and_modify import check_and_modify
 
 load_dotenv()
 
