@@ -2,7 +2,7 @@ import logging
 import os
 import sys
 from dotenv import load_dotenv
-from enums import MEASURMENT_TYPES
+from utils.enums import MEASURMENT_TYPES
 from utils.read_from_db import read_mean
 
 
