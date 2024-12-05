@@ -30,6 +30,7 @@ def check_and_modify(state):
                 logging.info(f"No data found for {device} for {MEAN_TIME_RANGE} minutes")
                 state ^= (1 << index)
                 state ^= (1 << index+2)
+                break
             else:
                 state ^= (0 << index)
                 state ^= (0 << index+2)
