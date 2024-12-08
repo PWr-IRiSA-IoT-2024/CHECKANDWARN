@@ -54,7 +54,7 @@ async def read_modify_write():
                 logging.info("Value written successfully")
             else:
                 logging.error("Error: Value on nrfDK differs from the value written")
-            await client.disconnect()
+            # await client.disconnect()
     except Exception as e:
         logging.error(f"An error occurred: {e}")
 

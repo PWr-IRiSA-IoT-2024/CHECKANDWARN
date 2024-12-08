@@ -32,33 +32,33 @@ def check_and_modify(state):
                 state ^= (1 << index+2)
                 break
             else:
-                state ^= (0 << index)
-                state ^= (0 << index+2)
+                state ^= (0 << 13 + index*2)
+                state ^= (0 << 14 + index*2)
             match measurement_type:
                 case 0:
                     if value > 2:
                         logging.info(f"CO2 level is too high for {device}")
-                        state ^= (1 << 9 + index*4)
+                        state ^= (1 << index*4)
                     else:
-                        state ^= (0 << 9 + index*4)
+                        state ^= (0 << index*4)
                 case 1:
                     if value > 2:
                         logging.info(f"VOC level is too high for {device}")
-                        state ^= (1 << 10 + index*4)
+                        state ^= (1 << 1 + index*4)
                     else:
-                        state ^= (0 << 10 + index*4)
+                        state ^= (0 << 1 + index*4)
                 case 2:
                     if value < 17 or value > 27:
                         logging.info(f"Temperature is too high for {device}")
-                        state ^= (1 << 11 + index*4)
+                        state ^= (1 << 2 + index*4)
                     else:
-                        state ^= (0 << 11 + index*4)
+                        state ^= (0 << 2 + index*4)
                 case 3:
                     if value < 30 or value > 70:
                         logging.info(f"Humidity is too high for {device}")
-                        state ^= (1 << 12 + index*4)
+                        state ^= (1 << 3 + index*4)
                     else:
-                        state ^= (0 << 12 + index*4)
+                        state ^= (0 << 3 + index*4)
                 case _:
                     logging.warning("Invalid measurement type")
     

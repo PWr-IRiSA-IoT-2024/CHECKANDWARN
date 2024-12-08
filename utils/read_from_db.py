@@ -20,9 +20,6 @@ DB_USER = os.getenv("DB_USER")
 DB_PASS = os.getenv("DB_PASS")
 DB_NAME = os.getenv("DB_NAME")
 
-
-client = InfluxDBClient(DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME)
-
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
@@ -36,6 +33,8 @@ def read_x_min_of_data_from_db(measurement: str, x: int):
         Example usage:
             - measurement = 'temperature'
     """
+
+    client = InfluxDBClient(DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME)
 
     query = f"select * from {measurement} where time > now() - {x}m and time_precision='ms'"
 
@@ -59,6 +58,8 @@ def read_data_from_db(query):
             - query = 'select * from temperature'
     """
 
+    client = InfluxDBClient(DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME)
+
     try:
         result = client.query(query)
         logging.info("Reading data from InfluxDB completed successfully")
@@ -81,6 +82,9 @@ def read_mean(time_range: int, measurement: str, device: str):
             - measurement = 'temperature'
             - device = 'sensor1'
     """
+
+    client = InfluxDBClient(DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME)
+    
     end_time = datetime.datetime.now()
     start_time = end_time - datetime.timedelta(minutes=time_range)
 
